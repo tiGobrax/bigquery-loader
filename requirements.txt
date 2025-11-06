@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+loguru
+google-cloud-bigquery
+pandas
+polars
+python-dotenv
+python-multipart
+pyarrow

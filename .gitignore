@@ -48,3 +48,4 @@ dist/
 # --- Arquivos do sistema ---
 .DS_Store
 Thumbs.db
+bigquery-loader@gobrax-data.iam.gserviceaccount.com.json

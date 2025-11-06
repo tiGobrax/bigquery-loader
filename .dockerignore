@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.log
+*.env
+.venv/
+.git/
+.gitignore
+__pycache__/
+*.parquet

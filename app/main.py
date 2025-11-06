@@ -1,6 +1,8 @@
+from dotenv import load_dotenv
+load_dotenv()  # <<< ADICIONE ESTA LINHA ANTES DE QUALQUER OUTRA IMPORTAÇÃO
+
 from fastapi import FastAPI
 from loguru import logger
-from app.core.config import settings
 from app.routers.bigquery_router import router as bigquery_router
 
 # Inicializa aplicação FastAPI
