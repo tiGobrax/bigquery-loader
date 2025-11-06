@@ -3,35 +3,34 @@ from fastapi.responses import JSONResponse
 from loguru import logger
 from app.services.bigquery_service import BigQueryService
 
-# Instância global do serviço BigQuery
-bq_service = BigQueryService(
-    project_id="gobrax-data",
-    dataset_id="raw_generic"
-)
-
+bq_service = BigQueryService()
 router = APIRouter()
 
 
 @router.post("/load/json")
 async def load_from_json(payload: dict):
     """
-    Recebe JSON e carrega no BigQuery.
-    Exemplo de corpo:
+    Exemplo de corpo JSON:
     {
+        "project_id": "gobrax-data",
+        "dataset_id": "raw_generic",
         "table_name": "hubspot_contacts",
         "data": [{...}, {...}]
     }
     """
     try:
-        table_name = payload.get("table_name")
+        project = payload.get("project_id")
+        dataset = payload.get("dataset_id")
+        table = payload.get("table_name")
         data = payload.get("data", [])
-        if not table_name or not data:
+
+        if not all([project, dataset, table, data]):
             return JSONResponse(
                 status_code=400,
-                content={"error": "Campos obrigatórios: table_name e data"}
+                content={"error": "Campos obrigatórios: project_id, dataset_id, table_name, data"}
             )
 
-        result = bq_service.load_table_from_json(table_name, data)
+        result = bq_service.load_table_from_json(project, dataset, table, data)
         return JSONResponse(content=result)
 
     except Exception as e:
@@ -41,6 +40,8 @@ async def load_from_json(payload: dict):
 
 @router.post("/load/parquet")
 async def load_from_parquet(
+    project_id: str = Form(...),
+    dataset_id: str = Form(...),
     table_name: str = Form(...),
     file: UploadFile = File(...)
 ):
@@ -52,7 +53,7 @@ async def load_from_parquet(
         with open(file_path, "wb") as f:
             f.write(await file.read())
 
-        result = bq_service.load_table_from_parquet(table_name, file_path)
+        result = bq_service.load_table_from_parquet(project_id, dataset_id, table_name, file_path)
         return JSONResponse(content=result)
 
     except Exception as e:
