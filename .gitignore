@@ -1,0 +1,50 @@
+# --- Ambientes virtuais ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Arquivos temporários do Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Logs e cache ---
+logs/
+*.log
+*.tmp
+*.cache
+
+# --- Arquivos de configuração locais ---
+.env
+.env.*
+
+# --- Banco de dados local ou artefatos ---
+*.db
+*.sqlite3
+*.parquet
+
+# --- IDEs e editores ---
+.vscode/
+.idea/
+*.code-workspace
+
+# --- Docker ---
+*.pid
+*.tar
+*.sock
+
+# --- Testes e relatórios ---
+.coverage
+htmlcov/
+pytest_cache/
+
+# --- Build / distribuição ---
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Arquivos do sistema ---
+.DS_Store
+Thumbs.db
